@@ -1,21 +1,20 @@
 from cnnClassifier.config.configuration import ConfigurationManager
-from cnnClassifier.components.model_trainer import Training
+from cnnClassifier.components.model_evaluation import ModelEvaluation
 from cnnClassifier import logger
 
-STAGE_NAME = "Model Training"
+STAGE_NAME = "Model Evaluation"
 
-
-class ModelTrainingPipeline:
+class EvaluationPipeline:
     def __init__(self):
         pass
 
     def main(self):
         config = ConfigurationManager()
-        training_config = config.get_training_config()
-        training = Training(config=training_config)
-        training.get_base_model()
-        training.train_valid_generator()
-        training.train()
+        evaluation_config = config.get_evaluation_config()
+        evaluation = ModelEvaluation(config=evaluation_config)
+        evaluation.evaluation()
+        evaluation.save_score()
+        evaluation.log_into_mlflow()
 
 
 if __name__ == "__main__":
@@ -23,7 +22,7 @@ if __name__ == "__main__":
         logger.info(
             f"==================== stage {STAGE_NAME} started ===================="
         )
-        obj = ModelTrainingPipeline()
+        obj = EvaluationPipeline()
         obj.main()
         logger.info(
             f"==================== stage {STAGE_NAME} completed ====================\n"
