@@ -21,4 +21,5 @@ set MLFLOW_TRACKING_PASSWORD=b85bafd69d98861fee89f5bf70dc5f62cf41c2e5
 ```bash
 dvc init
 dvc repro
+dvc dag
 ```
